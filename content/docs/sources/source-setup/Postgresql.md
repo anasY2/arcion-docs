@@ -153,18 +153,105 @@ The extracted `replicant-cli` will be referred to as the `$REPLICANT_HOME` direc
    vi $PGDATA/pg_hba.conf
    ```
 2. Make the necessary changes as follows:
-   ```BASH
-   # TYPE  DATABASE        USER                  ADDRESS                 METHOD
+```BASH
+ # TYPE  DATABASE        USER                  ADDRESS                 METHOD
+
+# allow local replication connection to <username> (IPv4 + IPv6)
+# "local" is for Unix domain socket connections only
+local     replication         <username>                                         trust
+host      replication         <username>    127.0.0.1/32                     <auth-method>
+host      replication         <username>    ::1/128                          <auth-method>
+
+# allow remote replication connection from any client machine  to <username> (IPv4 + IPv6)
+host     replication          <username>    0.0.0.0/0                        <auth-method>
+host     replication          <username>    ::0/0                            <auth-method>
+```
+{{< /hint >}}
+{{< hint "info" >}}
+
+Some examples for the `pg_hba.conf`:
+   {{% tabs "unique_id" %}}
+
+  {{% tab "trust" %}}
+```BASH
+   # TYPE  DATABASE             USER    ADDRESS                        METHOD
 
    # allow local replication connection to <username> (IPv4 + IPv6)
-   local     replication         <username>                                         trust
-   host      replication         <username>    127.0.0.1/32                     <auth-method>
-   host      replication         <username>    ::1/128                          <auth-method>
+   # "local" is for Unix domain socket connections only
+   local     replication         all                                    trust
+   host      replication         all   127.0.0.1/32                     trust
+   host      replication         all   ::1/128                          trust
 
    # allow remote replication connection from any client machine  to <username> (IPv4 + IPv6)
-   host     replication          <username>    0.0.0.0/0                        <auth-method>
-   host     replication          <username>    ::0/0                            <auth-method>
-   ```
+   host     replication          all    0.0.0.0/0                        trust
+   host     replication          all    ::0/0                            trust
+```
+  {{% /tab %}}
+
+  {{% tab "md5" %}}
+```BASH
+   # TYPE  DATABASE             USER     ADDRESS                       METHOD
+
+   # allow local replication connection to <username> (IPv4 + IPv6)
+   # "local" is for Unix domain socket connections only
+   local     replication         all                                     md5
+   host      replication         all    127.0.0.1/32                     md5
+   host      replication         all    ::1/128                          md5
+
+   # allow remote replication connection from any client machine  to <username> (IPv4 + IPv6)
+   host     replication          all    0.0.0.0/0                        md5
+   host     replication          all    ::0/0                            md5
+```
+  {{% /tab %}}
+  {{% tab "peer" %}}
+```BASH
+   # TYPE  DATABASE             USER     ADDRESS                       METHOD
+
+   # allow local replication connection to <username> (IPv4 + IPv6)
+   # "local" is for Unix domain socket connections only
+   local     replication         all                                     peer
+   host      replication         all    127.0.0.1/32                     peer
+   host      replication         all    ::1/128                          peer
+
+   # allow remote replication connection from any client machine  to <username> (IPv4 + IPv6)
+   host     replication          all    0.0.0.0/0                        peer
+   host     replication          all    ::0/0                            peer
+```
+  {{% /tab %}}
+  {{% tab "scram-sha-256" %}}
+  ```BASH
+   # TYPE  DATABASE             USER     ADDRESS                       METHOD
+
+   # allow local replication connection to <username> (IPv4 + IPv6)
+   # "local" is for Unix domain socket connections only
+   local     replication         all                                     scram-sha-256
+   host      replication         all    127.0.0.1/32                     scram-sha-256
+   host      replication         all    ::1/128                          scram-sha-256
+
+   # allow remote replication connection from any client machine  to <username> (IPv4 + IPv6)
+   host     replication          all    0.0.0.0/0                        scram-sha-256
+   host     replication          all    ::0/0                            scram-sha-256
+```
+  {{% /tab %}}
+  {{% tab "gss" %}}
+  ```BASH
+   # TYPE  DATABASE             USER     ADDRESS                       METHOD
+
+   # allow local replication connection to <username> (IPv4 + IPv6)
+   # "local" is for Unix domain socket connections only
+   local     replication         all                                     gss
+   host      replication         all    127.0.0.1/32                     gss
+   host      replication         all    ::1/128                          gss
+
+   # allow remote replication connection from any client machine  to <username> (IPv4 + IPv6)
+   host     replication          all    0.0.0.0/0                        gss
+   host     replication          all    ::0/0                            gss
+```
+  {{% /tab %}}
+
+    {{% /tabs %}}
+
+
    {{< /hint >}}
 
 ## IV. Setup Filter Configuration
