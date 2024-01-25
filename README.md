@@ -15,7 +15,7 @@ The documentation is built from Markdown files using [Hugo](https://gohugo.io/).
 
 To contribute to the documentation, you only need a GitHub account. See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
 
-To run a local instance of the documentation on your machine, follow these steps:
+To run a local instance of the documentation on your machine, follow the below steps:
 1. Install a Hugo extended release from [the Hugo releases page](https://github.com/gohugoio/hugo/releases) that's appropriate for your machine. Make sure to install Hugo 0.79 or higher.
 2. Navigate to your copy of the repository and run:
 	```sh
