@@ -1,4 +1,4 @@
-baseURL = "http://example.org/"
+baseURL = "/"
 languageCode = "en-us"
 theme = "book"
 [markup]
@@ -21,4 +21,4 @@ theme = "book"
       xhtml = false
 [params]
   BookTheme = 'Light'
-  BookLogo = '/blitzz-gradient.png'
+  BookLogo = '/arcion-horizontal.png'
